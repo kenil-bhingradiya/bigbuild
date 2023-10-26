@@ -15,8 +15,6 @@ param (
     [string] $displayName
 )
 
-echo "creating user!"
-
 New-ADUser `
 -Name $name `
 -GivenName $givenName `
@@ -27,4 +25,4 @@ New-ADUser `
 -Department $department `
 -Enabled $true
 
-echo "user created"
+echo "User Created Successfully!!"
