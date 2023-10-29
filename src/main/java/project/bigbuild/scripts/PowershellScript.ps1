@@ -28,7 +28,9 @@ New-ADUser `
 -EmailAddress $email `
 -Enabled $true
 
-Add-ADGroupMember -Identity ADKgroup -Members $samAccName
+#Add-ADGroupMember -Identity ADKgroup -Members $samAccName
+
+$sharedFolder="\\EC2AMAZ-ATSQJMJ\sharedFolder$\$department\$samAccName"
 
 New-Item -Path $sharedFolder -ItemType Directory
 
@@ -37,7 +39,7 @@ $permission = New-Object System.Security.AccessControl.FileSystemAccessRule("$sa
 $Acl.AddAccessRule($Permission)
 Set-Acl -Path $sharedFolder -aclObject $Acl
 
-Set-ADUser -Identity $samAccName -HomeDirectory PATH -HomeDrive Z:
+Set-ADUser -Identity $samAccName -HomeDirectory \\EC2AMAZ-ATSQJMJ\sharedFolder$\$department\$samAccName -HomeDrive Z:
 
 
 echo "User Created Successfully!!"

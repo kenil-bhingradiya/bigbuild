@@ -21,16 +21,22 @@ public class UserController
     public String createNewADUser(@RequestBody NewUserRequest newUser) throws IOException
     {
         String path = System.getProperty("user.dir") + "\\src\\main\\java\\project\\bigbuild\\scripts\\PowershellScript.ps1";
-        String command = String.format("powershell.exe %s -name %s -givenName %s -surname %s -samAccName %s -passwd %s -department %s -displayName '%s' -email %s", path, newUser.getName(), newUser.getGivenName(), newUser.getSurname(), newUser.getSamAccName(), newUser.getPasswd(), newUser.getDepartment(), newUser.getDisplayName(), newUser.getEmail());
+        String command = String.format("powershell.exe %s -name '%s' -givenName '%s' -surname '%s' -samAccName '%s' -passwd %s -department '%s' -displayName '%s' -email '%s'", path, newUser.getName(), newUser.getGivenName(), newUser.getSurname(), newUser.getSamAccName(), newUser.getPasswd(), newUser.getDepartment(), newUser.getDisplayName(), newUser.getEmail());
         System.out.println(command);
         Process proc = Runtime.getRuntime().exec(command);
         InputStream is = proc.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        String data = reader.readLine();
+
+        String data = "", res = "";
+        while((data = reader.readLine()) != null)
+        {
+            System.out.println(res);
+            res = data;
+        }
         reader.close();
         proc.getOutputStream().close();
-
-        return data;
+        System.out.println(res);
+        return res;
     }
 
     @GetMapping("/deleteUser/{username}")
